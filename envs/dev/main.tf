@@ -39,3 +39,10 @@ module "gcs_bucket_2" {
   location      = var.location
   force_destroy = var.force_destroy
 }
+
+module "gcs_bucket_3" {
+  source        = "../../modules/storage/buckets"
+  bucket_name   = "${var.bucket_name}-${random_integer.suffix.result}-2"
+  location      = var.location
+  force_destroy = var.force_destroy
+}
