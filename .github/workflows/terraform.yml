@@ -9,13 +9,16 @@ jobs:
   terraform:
     runs-on: ubuntu-latest
     env:
-      GOOGLE_CREDENTIALS: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+      GOOGLE_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
+
+      - name: Change to Terraform directory
+        run: cd envs/dev/
 
       - name: Terraform Init & Apply
         env:
