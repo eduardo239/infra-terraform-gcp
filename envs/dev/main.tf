@@ -16,11 +16,11 @@ resource "random_integer" "suffix" {
 #   force_destroy = var.force_destroy
 # }
 
-module "compute_instance" {
-  source                = "../../modules/compute/instance"
-  instance_name         = "${var.instance_name}-${random_integer.suffix.result}"
-  machine_type          = var.machine_type
-  zone                  = var.zone
-  compute_sa_account_id = var.compute_sa_account_id
-}
+# module "compute_instance" {
+#   source                = "../../modules/compute/instance"
+#   instance_name         = "${var.instance_name}-${random_integer.suffix.result}"
+#   machine_type          = var.machine_type
+#   zone                  = var.zone
+#   compute_sa_account_id = var.compute_sa_account_id
+# }
 

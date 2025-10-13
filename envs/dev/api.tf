@@ -3,7 +3,8 @@ variable "enabled_apis" {
   default = [
     "storage.googleapis.com",
     "iam.googleapis.com",
-    "compute.googleapis.com"
+    "compute.googleapis.com",
+    "cloudresourcemanager.googleapis.com"
   ]
 }
 
