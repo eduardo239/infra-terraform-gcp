@@ -17,6 +17,13 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
 
+      - name: Write tfvars.json from secret
+        env:
+          TFVARS_JSON: ${{ secrets.TFVARS_JSON }}
+        working-directory: envs/dev
+        run: |
+          echo "$TFVARS_JSON" > terraform.tfvars.json
+
       - name: Terraform Init & Apply
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/sa-key.json
@@ -24,4 +31,4 @@ jobs:
         run: |
           echo "$GOOGLE_CREDENTIALS" > sa-key.json
           terraform init
-          terraform apply -auto-approve
+          terraform apply -auto-approve -var-file=terraform.tfvars.json
