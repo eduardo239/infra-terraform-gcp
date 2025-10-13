@@ -31,4 +31,5 @@ jobs:
         run: |
           echo "$GOOGLE_CREDENTIALS" > sa-key.json
           terraform init
+          terraform validate
           terraform apply -auto-approve -var-file=terraform.tfvars.json
