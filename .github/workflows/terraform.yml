@@ -17,12 +17,10 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
 
-      - name: Change to Terraform directory
-        run: cd envs/dev/
-
       - name: Terraform Init & Apply
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/sa-key.json
+        working-directory: envs/dev
         run: |
           echo "$GOOGLE_CREDENTIALS" > sa-key.json
           terraform init
