@@ -25,24 +25,9 @@ resource "random_integer" "suffix" {
   max = 99999
 }
 
-module "gcs_bucket" {
-  source        = "../../modules/storage/buckets"
-  bucket_name   = "${var.bucket_name}-${random_integer.suffix.result}"
-  location      = var.location
-  force_destroy = var.force_destroy
-}
-
-
-module "gcs_bucket_2" {
-  source        = "../../modules/storage/buckets"
-  bucket_name   = "${var.bucket_name}-${random_integer.suffix.result}-2"
-  location      = var.location
-  force_destroy = var.force_destroy
-}
-
-module "gcs_bucket_3" {
-  source        = "../../modules/storage/buckets"
-  bucket_name   = "${var.bucket_name}-${random_integer.suffix.result}-3"
-  location      = var.location
-  force_destroy = var.force_destroy
-}
+# module "gcs_bucket" {
+#   source        = "../../modules/storage/buckets"
+#   bucket_name   = "${var.bucket_name}-${random_integer.suffix.result}"
+#   location      = var.location
+#   force_destroy = var.force_destroy
+# }
