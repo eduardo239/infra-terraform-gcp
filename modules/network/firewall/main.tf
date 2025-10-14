@@ -1,7 +1,7 @@
 locals {
   allow_rules = {
-    "ssh"  = { ports = ["22"], source = "203.0.113.0/24" }
-    "http" = { ports = ["80"], source = "203.0.113.0/24" }
+    "ssh"  = { ports = ["22"], source = "192.168.10.0/24" }
+    "http" = { ports = ["80"], source = "192.168.10.0/24" }
   }
   deny_rules = {
     "all" = { ports = ["0-65535"], source = "0.0.0.0/0" }
