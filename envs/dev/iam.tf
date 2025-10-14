@@ -12,8 +12,6 @@ resource "google_project_iam_custom_role" "terraform_minimal" {
     "storage.objects.delete",
     "storage.objects.get",
     "storage.objects.list",
-    "resourcemanager.projectIamPolicy.get",
-    "resourcemanager.projectIamPolicy.set",
     "artifactregistry.repositories.downloadArtifacts",
     "compute.disks.create",
     "compute.instances.list",
