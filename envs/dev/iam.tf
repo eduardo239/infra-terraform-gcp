@@ -8,17 +8,18 @@ resource "google_project_iam_custom_role" "terraform_minimal" {
     "storage.buckets.create",
     "storage.buckets.get",
     "storage.buckets.list",
+    "storage.buckets.update",
     "storage.objects.create",
     "storage.objects.delete",
     "storage.objects.get",
     "storage.objects.list",
     "artifactregistry.repositories.downloadArtifacts",
     "compute.disks.create",
-    "compute.instances.list",
     "compute.disks.setLabels",
     "compute.firewalls.create",
     "compute.firewalls.delete",
     "compute.firewalls.update",
+    "compute.instances.list",
     "compute.instances.create",
     "compute.instances.delete",
     "compute.instances.setLabels",
@@ -30,11 +31,13 @@ resource "google_project_iam_custom_role" "terraform_minimal" {
     "iam.serviceAccounts.create",
     "iam.serviceAccounts.delete",
     "iam.serviceAccounts.list",
+    "iam.serviceAccounts.actAs",
     "serviceusage.services.disable",
     "serviceusage.services.enable",
     "serviceusage.services.get",
     "serviceusage.services.list",
     "serviceusage.services.use",
+    "resourcemanager.projects.get"
   ]
 }
 
