@@ -1,20 +1,4 @@
-resource "google_service_account" "terraform" {
-  account_id   = "terraform-sa"
-  display_name = "Terraform Service Account"
-}
-
-resource "google_project_iam_member" "terraform_sa_owner" {
-  project = var.project_id
-  role    = "roles/editor"
-  member  = "serviceAccount:${google_service_account.terraform.email}"
-}
-
-resource "google_project_iam_member" "terraform_sa_storage_admin" {
-  project = var.project_id
-  role    = "roles/storage.admin"
-  member  = "serviceAccount:${google_service_account.terraform.email}"
-}
-
+# Create a Custom Role with minimal permissions for Terraform
 resource "google_project_iam_custom_role" "terraform_minimal" {
   role_id     = "TERRAFORM_MINIMAL"
   title       = "Terraform Minimal Role"
@@ -56,3 +40,15 @@ resource "google_project_iam_custom_role" "terraform_minimal" {
   ]
 }
 
+# Create a Service Account for Terraform
+resource "google_service_account" "terraform" {
+  account_id   = "terraform-sa-dev"
+  display_name = "Terraform Service Account"
+}
+
+# Binding (vincular a Service Account à Custom Role)
+resource "google_project_iam_member" "app_sa_custom_role" {
+  project = var.project_id
+  role    = "projects/${var.project_id}/roles/${google_project_iam_custom_role.terraform_minimal.role_id}"
+  member  = "serviceAccount:${google_service_account.terraform.email}"
+}
