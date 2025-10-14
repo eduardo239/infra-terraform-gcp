@@ -9,6 +9,26 @@ resource "random_integer" "suffix" {
   max = 99999
 }
 
+
+
+
+module "vpc" {
+  source               = "../../modules/network/vpc"
+  project_id           = var.project_id
+  network_name         = var.network_name
+  subnet_name          = var.subnet_name
+  region               = var.region
+  subnet_ip_cidr_range = var.subnet_ip_cidr_range
+}
+module "subnet" {
+  source               = "../../modules/network/subnet"
+  network              = module.vpc.vpc_network_id
+  subnet_name          = var.subnet_name
+  region               = var.region
+  subnet_ip_cidr_range = var.subnet_ip_cidr_range
+  depends_on           = [module.vpc]
+}
+
 # module "gcs_bucket" {
 #   source        = "../../modules/storage/bucket"
 #   bucket_name   = "${var.bucket_name}-${random_integer.suffix.result}"
