@@ -28,7 +28,13 @@ module "subnet" {
   subnet_ip_cidr_range = var.subnet_ip_cidr_range
   depends_on           = [module.vpc]
 }
-
+module "firewall" {
+  source        = "../../modules/network/firewall"
+  firewall_name = var.firewall_name
+  network_name  = module.vpc.vpc_network_id
+  target_tags   = var.firewall_target_tags
+  depends_on    = [module.vpc]
+}
 # module "gcs_bucket" {
 #   source        = "../../modules/storage/bucket"
 #   bucket_name   = "${var.bucket_name}-${random_integer.suffix.result}"
