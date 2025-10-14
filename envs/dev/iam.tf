@@ -65,7 +65,7 @@ variable "roles" {
 }
 
 resource "google_service_account" "app_sa" {
-  account_id   = "app_service_account"
+  account_id   = "app-service-account"
   display_name = "App Service Account"
 }
 
