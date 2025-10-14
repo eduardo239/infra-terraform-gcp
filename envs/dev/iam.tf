@@ -1,7 +1,7 @@
 # Create a Custom Role with minimal permissions for Terraform
 resource "google_project_iam_custom_role" "terraform_minimal" {
   role_id     = "TERRAFORM_MINIMAL"
-  title       = "Terraform Minimal Role"
+  title       = "TERRAFORM MINIMAL"
   description = "Minimal permissions for Terraform operations"
   project     = var.project_id
   permissions = [
@@ -44,9 +44,32 @@ resource "google_service_account" "terraform" {
   display_name = "Terraform Service Account"
 }
 
-# Binding (vincular a Service Account à Custom Role)
+# Binding, assigning the Custom Role to the Service Account
 resource "google_project_iam_member" "app_sa_custom_role" {
   project = var.project_id
   role    = "projects/${var.project_id}/roles/${google_project_iam_custom_role.terraform_minimal.role_id}"
   member  = "serviceAccount:${google_service_account.terraform.email}"
+}
+
+#
+variable "roles" {
+  type = list(string)
+  default = [
+    "roles/storage.admin",
+    "roles/logging.viewer",
+    "roles/monitoring.metricWriter"
+  ]
+}
+
+resource "google_service_account" "app_sa" {
+  account_id   = "app_service_account"
+  display_name = "App Service Account"
+}
+
+resource "google_project_iam_member" "app_sa_roles" {
+  for_each = toset(var.roles)
+
+  project = var.project_id
+  role    = each.key
+  member  = "serviceAccount:${google_service_account.app_sa.email}"
 }
