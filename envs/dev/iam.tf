@@ -60,7 +60,8 @@ variable "roles" {
   default = [
     "roles/storage.admin",
     "roles/logging.viewer",
-    "roles/monitoring.metricWriter"
+    "roles/monitoring.metricWriter",
+    "roles/iam.serviceAccountUser"
   ]
 }
 
