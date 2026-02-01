@@ -37,3 +37,9 @@ terraform.rc
 
 # Ignore backup files
 *.bak
+
+# CI/CD credentials (never commit)
+sa-key.json
+**/sa-key.json
+*.pem
+*.key

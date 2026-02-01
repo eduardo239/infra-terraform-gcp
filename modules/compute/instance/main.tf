@@ -7,30 +7,45 @@ resource "google_compute_instance" "default" {
   name         = var.instance_name
   machine_type = var.machine_type
   zone         = var.zone
+  project      = var.project_id
 
-  tags = ["foo", "bar"]
+  tags = var.tags
 
+  # Imagem: use família com patch automático; evite imagem fixa desatualizada
   boot_disk {
     initialize_params {
-      image = "debian-cloud/debian-11"
-      labels = {
-        my_label = "value"
+      image = var.boot_image
+    }
+    auto_delete = true
+  }
+
+  # Rede: use VPC dedicada (não default); IP público apenas se explicitamente habilitado
+  network_interface {
+    network    = var.network_self_link
+    subnetwork = var.subnet_self_link
+
+    dynamic "access_config" {
+      for_each = var.enable_public_ip ? [1] : []
+      content {
+        # Ephemeral public IP apenas quando necessário
       }
     }
   }
 
-
-  network_interface {
-    network = "default"
-    access_config {
-      // Ephemeral public IP
-    }
-  }
-
-
+  # Princípio do menor privilégio: sem cloud-platform; permissões via IAM na SA
   service_account {
-    # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
     email  = google_service_account.default.email
-    scopes = ["cloud-platform"]
+    scopes = var.service_account_scopes
   }
+
+  # Segurança: desabilitar serial port e metadata legada quando possível
+  metadata = var.metadata
+
+  shielded_instance_config {
+    enable_secure_boot          = var.enable_secure_boot
+    enable_vtpm                 = true
+    enable_integrity_monitoring = true
+  }
+
+  allow_stopping_for_update = true
 }

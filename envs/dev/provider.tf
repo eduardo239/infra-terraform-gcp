@@ -5,17 +5,18 @@ terraform {
       source  = "hashicorp/google"
       version = ">= 6.0.0"
     }
+    random = {
+      source  = "hashicorp/random"
+      version = ">= 3.0.0"
+    }
   }
 
-  backend "gcs" {
-    bucket = "terraform-state-bucket-00001"
-    prefix = "env/dev"
+  backend "local" {
+
   }
 }
 
-
 provider "google" {
-  project = "proj-test-dev-474522"
-  region  = "us-central1"
-
+  project = var.project_id
+  region  = var.region
 }
